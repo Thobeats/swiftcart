@@ -1,14 +1,15 @@
-import AppLogoIcon from './app-logo-icon';
+import { Link } from '@inertiajs/react';
+import { ShoppingCart } from 'lucide-react';
 
 export default function AppLogo() {
     return (
         <>
-            <div className="flex aspect-square size-8 items-center justify-center rounded-md bg-sidebar-primary text-sidebar-primary-foreground">
-                <AppLogoIcon className="size-5 fill-current text-white dark:text-black" />
-            </div>
-            <div className="ml-1 grid flex-1 text-left text-sm">
-                <span className="mb-0.5 truncate leading-tight font-semibold">
-                    Laravel Starter Kit
+            <div className="flex items-center gap-2">
+                <div className="bg-accent flex h-8 w-8 items-center justify-center rounded-lg">
+                    <ShoppingCart className="text-accent-foreground h-5 w-5" />
+                </div>
+                <span className="text-xl font-bold tracking-tight">
+                    <Link href={'/'}>SwiftCart </Link>
                 </span>
             </div>
         </>

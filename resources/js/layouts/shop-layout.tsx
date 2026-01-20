@@ -16,8 +16,6 @@ export default function ShopLayout({
                     content="Discover amazing products at unbeatable prices. SwiftCart - your one-stop online shopping destination."
                 />
 
-                <meta name="generator" content="v0.app" />
-
                 {/* Icons */}
                 <link
                     rel="icon"

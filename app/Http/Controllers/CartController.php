@@ -18,24 +18,52 @@ class CartController extends Controller
             ]);
         }
 
-        ///Save the Cart Item
+        ///Find the Cart Item
         $cart = Cart::where(['product_id' => $product->id, "user_id" => $request->user()->id])->first();
 
         if ($cart) {
             $cart->increment('quantity');
         } else {
-            Cart::create([
+            $cart = Cart::create([
                 'product_id' => $product->id,
                 'quantity' => 1,
                 'user_id' => $request->user()->id
             ]);
         }
 
-        return;
+        return back()->with('success', array_merge(
+            $cart->product->only(
+                'id',
+                'name',
+                'price',
+                'description',
+                'image'
+            ),
+            ['quantity' => $cart->quantity]
+        ));
     }
 
-    public function updateQuantity(Request $request, Cart $cart)
+    public function removeItemFromCart(Request $request, Product $product)
     {
+        ///Find the Cart Item
+        $cart = Cart::where(['product_id' => $product->id, "user_id" => $request->user()->id])->first();
+
+        if (!$cart)
+            return back()->with('error', 'Cart Item not found');
+
+        $cart->delete();
+
+        return back()->with('success', 'cart item deleted');
+    }
+
+    public function updateQuantity(Request $request, Product $product)
+    {
+        ///Find the Cart Item
+        $cart = Cart::where(['product_id' => $product->id, "user_id" => $request->user()->id])->first();
+
+        if (!$cart)
+            return back()->with('error', 'Cart Item not found');
+
         $validated = $request->validate([
             "action" => 'required|in:add,sub'
         ]);
@@ -50,14 +78,12 @@ class CartController extends Controller
             }
         }
 
-        return;
+        return back()->with('success', 'Cart Item Updated');
     }
 
-    public function deleteCart(Request $request, Cart $cart)
+    public function clearCart(Request $request)
     {
-        if ($cart->user_id == $request->user()->id)
-            $cart->delete();
-
-        return;
+        Cart::where('user_id', $request->user()->id)->delete();
+        return back()->with('success', 'Cart Item Updated');
     }
 }

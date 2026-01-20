@@ -18,7 +18,6 @@ type PageProps = {
 function ShopContent({ auth, products, categories }: PageProps) {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('All');
-    const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
     const [cartOpen, setCartOpen] = useState(false);
 
     const filteredProducts = useMemo(() => {
@@ -36,11 +35,6 @@ function ShopContent({ auth, products, categories }: PageProps) {
             return matchesSearch && matchesCategory;
         });
     }, [searchQuery, selectedCategory]);
-
-
-    const handleSwitchAuthMode = () => {
-        setAuthMode(authMode === 'login' ? 'register' : 'login');
-    };
 
     return (
         <div className="bg-background min-h-screen">

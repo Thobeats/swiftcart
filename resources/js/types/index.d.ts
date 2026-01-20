@@ -58,3 +58,11 @@ export interface Product {
 export interface Category {
     name: string;
 }
+
+export interface Order {
+    orderNo: string;
+    customer: string;
+    status: string;
+    price: number;
+    date: string;
+}

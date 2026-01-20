@@ -10,7 +10,7 @@ interface CartDrawerProps {
 }
 
 export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
-  const { cart, removeFromCart, updateQuantity, cartTotal, clearCart } =
+  const { cart, removeFromCart, updateQuantity, cartTotal, clearCart, checkOut } =
     useCart();
 
   return (
@@ -93,7 +93,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                             size="icon"
                             className="h-8 w-8 bg-transparent"
                             onClick={() =>
-                              updateQuantity(item.id, item.quantity - 1)
+                              updateQuantity(item.id, item.quantity - 1, 'sub')
                             }
                           >
                             <Minus className="h-3 w-3" />
@@ -106,7 +106,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                             size="icon"
                             className="h-8 w-8 bg-transparent"
                             onClick={() =>
-                              updateQuantity(item.id, item.quantity + 1)
+                              updateQuantity(item.id, item.quantity + 1, 'add')
                             }
                           >
                             <Plus className="h-3 w-3" />
@@ -134,6 +134,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
               </div>
               <Button
                 className="w-full h-12 bg-accent text-accent-foreground hover:bg-accent/90 font-medium"
+                onClick={checkOut}
               >
                 Checkout
               </Button>

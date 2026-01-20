@@ -4,8 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Head, useForm } from '@inertiajs/react';
-import { Lock, Mail, X } from 'lucide-react';
+import { Head, useForm, Link } from '@inertiajs/react';
+import { Lock, Mail } from 'lucide-react';
 import React from 'react';
 
 export default function Login({
@@ -37,12 +37,6 @@ export default function Login({
                 <div className="border-border bg-card w-full max-w-md rounded-lg border shadow-lg">
                     <div className="border-border flex items-center justify-between border-b p-6">
                         <h2 className="text-2xl font-bold">Welcome back</h2>
-                        <button
-                            className="text-muted-foreground hover:text-foreground"
-                            aria-label="Close"
-                        >
-                            <X className="h-5 w-5" />
-                        </button>
                     </div>
 
                     <div className="p-6">

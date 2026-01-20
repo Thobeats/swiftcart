@@ -30,16 +30,33 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $user = $request->user();
         return [
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
-                'cartItems' => $request->user() ? $request->user()->cartItems : []
             ],
-            'ziggy' => fn () => [
+            'ziggy' => fn() => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
+            "error" => fn() => $request->session()->get('error'),
+            "success" => fn() => $request->session()->get('success'),
+            'cartItems' => $user
+                ? $user->cartItems->map(
+                    fn($item) =>
+                    array_merge(
+                        $item->product->only(
+                            'id',
+                            'name',
+                            'price',
+                            'description',
+                            'image'
+                        ),
+                        ['quantity' => $item->quantity]
+                    )
+                )
+                : []
         ];
     }
 }
