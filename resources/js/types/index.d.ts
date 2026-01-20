@@ -1,8 +1,29 @@
-import { InertiaLinkProps } from '@inertiajs/react';
-import { LucideIcon } from 'lucide-react';
+import { Config } from 'ziggy-js';
 
-export interface Auth {
-    user: User;
+export interface User {
+    id: number;
+    name: string;
+    email: string;
+    email_verified_at?: string;
+}
+
+export type PageProps<
+    T extends Record<string, unknown> = Record<string, unknown>,
+> = T & {
+    auth: {
+        user: User;
+    };
+    ziggy: Config & { location: string };
+};
+
+export interface SharedData {
+    name: string;
+    quote: { message: string; author: string };
+    auth: Auth;
+    success: any;
+    ziggy: Config & { location: string };
+    sidebarOpen: boolean;
+    [key: string]: unknown;
 }
 
 export interface BreadcrumbItem {
@@ -17,26 +38,23 @@ export interface NavGroup {
 
 export interface NavItem {
     title: string;
-    href: NonNullable<InertiaLinkProps['href']>;
+    href: string;
     icon?: LucideIcon | null;
     isActive?: boolean;
+    children?: NavItem[];
 }
 
-export interface SharedData {
-    name: string;
-    auth: Auth;
-    sidebarOpen: boolean;
-    [key: string]: unknown;
-}
-
-export interface User {
+export interface Product {
     id: number;
     name: string;
-    email: string;
-    avatar?: string;
-    email_verified_at: string | null;
-    two_factor_enabled?: boolean;
+    image: string;
+    price: number;
+    description: string;
+    category: string;
     created_at: string;
-    updated_at: string;
-    [key: string]: unknown; // This allows for additional properties...
+    stock_quantity: number;
+}
+
+export interface Category {
+    name: string;
 }
