@@ -1,6 +1,7 @@
 import { Head } from '@inertiajs/react';
 import React from 'react';
 
+
 export default function ShopLayout({
     children,
 }: Readonly<{

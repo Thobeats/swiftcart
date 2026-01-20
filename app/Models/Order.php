@@ -12,4 +12,9 @@ class Order extends Model
         "price",
         "status"
     ];
+
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class, 'order_no', 'order_no');
+    }
 }

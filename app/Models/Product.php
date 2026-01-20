@@ -12,10 +12,19 @@ class Product extends Model
         "stock_quantity",
         "image",
         "category_id",
-        "description"
+        "description",
+        "out_of_stock"
     ];
 
-    public function category() {
+    protected function casts(): array
+    {
+        return [
+            "out_of_stock" => "boolean"
+        ];
+    }
+
+    public function category()
+    {
         return $this->belongsTo(ProductCategory::class, 'category_id', 'id');
     }
 }
