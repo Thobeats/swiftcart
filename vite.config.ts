@@ -10,11 +10,7 @@ export default defineConfig({
             ssr: 'resources/js/ssr.tsx',
             refresh: true,
         }),
-        react({
-            babel: {
-                plugins: ['babel-plugin-react-compiler'],
-            },
-        }),
+        react(),
         tailwindcss(),
     ],
     esbuild: {
