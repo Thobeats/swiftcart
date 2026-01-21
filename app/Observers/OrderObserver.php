@@ -2,8 +2,9 @@
 
 namespace App\Observers;
 
+use App\Jobs\ProcessOrderStock;
 use App\Models\Order;
-use App\Models\Product;
+
 
 class OrderObserver
 {
@@ -12,20 +13,7 @@ class OrderObserver
      */
     public function created(Order $order): void
     {
-        $stockTreshold = 5;
-        ///Reduce the stock after a order is created
-        foreach($order->items as $item) {
-            $product = $item->product;
-            $product->decrement('stock_quantity', $item->quantity);
-
-            if ($product->stock_quantity <= $stockTreshold && !$product->out_of_stock) {
-                /// Update the product
-                $product->out_of_stock = true;
-                $product->save();
-
-                //// Send Email to the Admin
-            }
-        }
+        ProcessOrderStock::dispatch($order->id);
     }
 
     /**

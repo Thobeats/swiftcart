@@ -2,6 +2,7 @@
 
 use Inertia\Inertia;
 use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
