@@ -1,7 +1,6 @@
 import { Head } from '@inertiajs/react';
 import React from 'react';
 
-
 export default function ShopLayout({
     children,
 }: Readonly<{
@@ -31,7 +30,9 @@ export default function ShopLayout({
                 <link rel="icon" href="/icon.svg" type="image/svg+xml" />
                 <link rel="apple-touch-icon" href="/apple-icon.png" />
             </Head>
-            <div className={`font-sans antialiased`}>{children}</div>
+            <div className={`font-sans antialiased`}>
+                {children}
+            </div>
         </>
     );
 }

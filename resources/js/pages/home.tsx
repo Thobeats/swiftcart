@@ -6,13 +6,14 @@ import { Header } from '@/components/header';
 import { ProductCard } from '@/components/product-card';
 import ShopLayout from '@/layouts/shop-layout';
 import { CartProvider } from '@/lib/cart-context';
-import { useMemo, useState } from 'react';
 import { Category, Product } from '@/types';
+import { useMemo, useState } from 'react';
+
 
 type PageProps = {
     auth: boolean;
-    products: Product[],
-    categories: Category[]
+    products: Product[];
+    categories: Category[];
 };
 
 function ShopContent({ auth, products, categories }: PageProps) {
@@ -108,7 +109,11 @@ export default function Home({ auth, products, categories }: PageProps) {
     return (
         <ShopLayout>
             <CartProvider>
-                <ShopContent auth={auth} products={products} categories={categories} />
+                <ShopContent
+                    auth={auth}
+                    products={products}
+                    categories={categories}
+                />
             </CartProvider>
         </ShopLayout>
     );

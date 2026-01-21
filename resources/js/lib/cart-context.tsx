@@ -4,7 +4,8 @@ import { createContext, useContext, useState, type ReactNode } from 'react';
 
 import { Product } from '@/types';
 import { router, usePage } from '@inertiajs/react';
-import { error } from 'console';
+
+
 
 export interface CartItem extends Omit<
     Product,

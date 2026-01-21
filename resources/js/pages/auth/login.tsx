@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Head, useForm, Link } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { Lock, Mail } from 'lucide-react';
 import React from 'react';
 
@@ -33,7 +33,7 @@ export default function Login({
             <Head>
                 <title>Sign In</title>
             </Head>
-            <div className="bg-background flex min-h-screen items-center justify-center">
+            <div className="bg-background flex flex-col min-h-screen items-center justify-center">
                 <div className="border-border bg-card w-full max-w-md rounded-lg border shadow-lg">
                     <div className="border-border flex items-center justify-between border-b p-6">
                         <h2 className="text-2xl font-bold">Welcome back</h2>
@@ -145,6 +145,17 @@ export default function Login({
                             </p>
                         </div>
                     </div>
+                </div>
+
+                <div className="mt-6 text-center">
+                    <p className="text-muted-foreground text-sm">
+                        <a
+                            href={route('home')}
+                            className="text-foreground font-medium underline underline-offset-2 hover:text-gray-400"
+                        >
+                            Back to Shop
+                        </a>
+                    </p>
                 </div>
             </div>
         </>
