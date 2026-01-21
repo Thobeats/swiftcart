@@ -9,11 +9,9 @@ use App\Http\Controllers\ProfileController;
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
-Route::get('/dashboard', [OrderController::class, 'orderSummary'])->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/orders', [OrderController::class, 'allOrders'])->middleware(['auth', 'verified'])->name('orders');
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 
     //// CART ROUTES
     Route::post("/cart/add/{product}", [CartController::class, 'addItemToCart'])->name('add.cart.item');
@@ -24,6 +22,10 @@ Route::middleware('auth')->group(function () {
     ///// CHECKOUT
     Route::post('/checkout', [OrderController::class, 'createOrder'])->name('order.create');
 
+    //// DASHBOARD
+    Route::get('/dashboard', [OrderController::class, 'orderSummary'])->name('dashboard');
+    Route::get('/orders', [OrderController::class, 'allOrders'])->name('orders');
+    Route::get('/orders/detail/{order}', [OrderController::class, 'orderDetails'])->name('orders.detail');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

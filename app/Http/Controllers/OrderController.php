@@ -72,6 +72,7 @@ class OrderController extends Controller
     {
         $user = $request->user();
         $orders = Order::where(['user_id' => $user->id])->latest()->get()->map(fn($order) => [
+            "id" => $order->id,
             "orderNo" => $order->order_no,
             "status" => $order->status,
             "price" => $order->price,
@@ -79,5 +80,22 @@ class OrderController extends Controller
         ]);
 
         return Inertia::render('orders', compact('orders'));
+    }
+
+    public function orderDetails(Order $order)
+    {
+        $orderItems = OrderItem::where('order_no', $order->order_no)
+            ->get()
+            ->map(fn(OrderItem $item) => [
+                "id" => $item->id,
+                "product_name" => $item->product->name,
+                "quantity" => $item->quantity,
+                "price" => $item->price
+            ]);
+
+        return response()->json([
+            'items' => $orderItems,
+            'orderNo' => $order->order_no,
+        ]);
     }
 }

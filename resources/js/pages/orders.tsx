@@ -1,7 +1,16 @@
+'use client';
+
+import { OrderDetailsModal } from '@/components/order-details-modal';
+import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
-import { Order } from '@/types';
+import { Order, OrderItem } from '@/types';
 import { Head } from '@inertiajs/react';
 import { useMemo, useState } from 'react';
+
+interface OrderDetailsModalProps {
+    items: OrderItem[];
+    orderNo: string;
+}
 
 export default function OrdersPage({
     orders,
@@ -12,6 +21,10 @@ export default function OrdersPage({
 }) {
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(initialPageSize);
+    const [orderDetails, setOrderDetails] = useState<OrderDetailsModalProps>({
+        items: [],
+        orderNo: '',
+    });
 
     const totalPages = Math.max(1, Math.ceil(orders.length / pageSize));
 
@@ -27,6 +40,20 @@ export default function OrdersPage({
 
     // reset page when pageSize or orders change
     useMemo(() => setPage(1), [pageSize, orders.length]);
+
+    const checkDetails = async (orderId: string) => {
+        try {
+            const res = await fetch(`/orders/detail/${orderId}`);
+            if (!res.ok) throw await res.text();
+            const data = await res.json();
+            setOrderDetails({
+                items: data.items || [],
+                orderNo: data.orderNo || '',
+            });
+        } catch (err) {
+            console.error('Failed to load order details', err);
+        }
+    };
 
     return (
         <AppLayout>
@@ -80,7 +107,14 @@ export default function OrdersPage({
                                         paginated.map((o) => (
                                             <tr key={o.orderNo}>
                                                 <td className="px-6 py-4 text-sm font-medium">
-                                                    {o.orderNo}
+                                                    <Button
+                                                        variant={'ghost'}
+                                                        onClick={() =>
+                                                            checkDetails(o.id)
+                                                        }
+                                                    >
+                                                        {o.orderNo}
+                                                    </Button>
                                                 </td>
                                                 <td className="px-6 py-4 text-sm">
                                                     <span
@@ -186,6 +220,14 @@ export default function OrdersPage({
                         </div>
                     </div>
                 </div>
+                {
+                    <OrderDetailsModal
+                        isOpen={orderDetails.items.length > 0}
+                        orderNumber={orderDetails.orderNo}
+                        items={orderDetails.items}
+                        onClose={() => setOrderDetails({items: [], orderNo: ""})}
+                    />
+                }
             </div>
         </AppLayout>
     );

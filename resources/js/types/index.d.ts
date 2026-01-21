@@ -61,9 +61,17 @@ export interface Category {
 }
 
 export interface Order {
+    id: string;
     orderNo: string;
     customer: string;
     status: string;
     price: number;
     date: string;
+}
+
+interface OrderItem {
+  id: number | string;
+  product_name: string;
+  price: number;
+  quantity: number;
 }

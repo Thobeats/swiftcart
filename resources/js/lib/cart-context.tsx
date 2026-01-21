@@ -19,6 +19,7 @@ interface CartContextType {
     addToCart: (product: Product) => void;
     removeFromCart: (productId: number) => void;
     checkOut: () => void;
+    checkoutSuccess: boolean;
     updateQuantity: (
         productId: number,
         quantity: number,
@@ -41,8 +42,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
     const [cartCount, setCartCount] = useState<number>(
         initialCart.reduce((sum, item) => sum + item.quantity, 0),
     );
+    const [checkoutSuccess, setCheckoutSuccess] = useState<boolean>(false);
 
     const addToCart = (product: Product) => {
+        if (checkoutSuccess) setCheckoutSuccess(false);
         router.post(
             `/cart/add/${product.id}`,
             {},
@@ -161,6 +164,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
             {
                 onSuccess: () => {
                     clearCart();
+                    setCheckoutSuccess(true);
                 },
                 onError: (error) => {
                     console.log(error);
@@ -180,6 +184,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
                 updateQuantity,
                 clearCart,
                 checkOut,
+                checkoutSuccess,
                 cartTotal,
                 cartCount,
             }}
