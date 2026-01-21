@@ -12,6 +12,26 @@ use App\Http\Controllers\ProfileController;
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 
+Route::get('/refresh', function () {
+    $today = now()->startOfDay();
+
+    $orders = OrderItem::select('product_id', DB::raw('SUM(quantity) as quantity_sold'), DB::raw('SUM(price) as revenue'))
+        ->whereDate('created_at', $today)
+        ->with('product:id,name')
+        ->groupBy('product_id')
+        ->get()
+        ->map(function (OrderItem $item) {
+            return [
+                "name" => $item->product->name,
+                "quantity_sold" => $item->quantity_sold,
+                "revenue" => $item->revenue
+            ];
+        })
+        ->toArray();
+
+    dd($orders);
+});
+
 Route::get('/dashboard', [OrderController::class, 'orderSummary'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/orders', [OrderController::class, 'allOrders'])->middleware(['auth', 'verified'])->name('orders');
 

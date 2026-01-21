@@ -62,7 +62,7 @@ class OrderController extends Controller
     {
         OrderItem::insert(
             collect($orders)
-                ->map(fn($order) => array('order_no' => $orderNo, 'product_id' => $order['product_id'], 'quantity' => $order['quantity'], 'price' => $order['price']))
+                ->map(fn($order) => array('order_no' => $orderNo, 'product_id' => $order['product_id'], 'quantity' => $order['quantity'], 'price' => $order['price'], 'created_at' => now(), 'updated_at' => now()))
                 ->toArray()
         );
 
