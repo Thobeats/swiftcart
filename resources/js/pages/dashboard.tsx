@@ -1,5 +1,6 @@
-import AppLayout from '@/layouts/app-layout';
 import { Head } from '@inertiajs/react';
+
+import AppLayout from '@/layouts/app-layout';
 import { Order } from '@/types';
 
 export default function Dashboard({

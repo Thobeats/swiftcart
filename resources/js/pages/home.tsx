@@ -1,5 +1,7 @@
 'use client';
 
+import { useMemo, useState } from 'react';
+
 import { CartDrawer } from '@/components/cart-drawer';
 import { CategoryFilter } from '@/components/category-filter';
 import { Header } from '@/components/header';
@@ -7,7 +9,6 @@ import { ProductCard } from '@/components/product-card';
 import ShopLayout from '@/layouts/shop-layout';
 import { CartProvider } from '@/lib/cart-context';
 import { Category, Product } from '@/types';
-import { useMemo, useState } from 'react';
 
 
 type PageProps = {
@@ -35,7 +36,7 @@ function ShopContent({ auth, products, categories }: PageProps) {
                 product.category === selectedCategory;
             return matchesSearch && matchesCategory;
         });
-    }, [searchQuery, selectedCategory]);
+    }, [searchQuery, selectedCategory, products]);
 
     return (
         <div className="bg-background min-h-screen">

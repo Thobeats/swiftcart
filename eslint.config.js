@@ -9,55 +9,87 @@ import typescript from 'typescript-eslint';
 /** @type {import('eslint').Linter.Config[]} */
 export default [
     js.configs.recommended,
-    reactHooks.configs.flat.recommended,
     ...typescript.configs.recommended,
+
+    // ✅ React + React Hooks (plugins FIRST, no overwrite)
     {
-        ...react.configs.flat.recommended,
-        ...react.configs.flat['jsx-runtime'], // Required for React 17+
+        plugins: {
+            react,
+            'react-hooks': reactHooks,
+        },
+
         languageOptions: {
             globals: {
                 ...globals.browser,
             },
         },
-        rules: {
-            'react/react-in-jsx-scope': 'off',
-            'react/prop-types': 'off',
-            'react/no-unescaped-entities': 'off',
-        },
+
         settings: {
             react: {
                 version: 'detect',
             },
         },
+
+        rules: {
+            // React
+            ...react.configs.flat.recommended.rules,
+            ...react.configs.flat['jsx-runtime'].rules,
+
+            'react/react-in-jsx-scope': 'off',
+            'react/prop-types': 'off',
+            'react/no-unescaped-entities': 'off',
+
+            // React Hooks
+            'react-hooks/rules-of-hooks': 'error',
+            'react-hooks/exhaustive-deps': 'warn',
+        },
     },
+
+    // Import rules
     {
         ...importPlugin.flatConfigs.recommended,
         settings: {
             'import/resolver': {
-                typescript: true,
+                typescript: {
+                    alwaysTryTypes: true,
+                },
                 node: true,
             },
         },
         rules: {
+            ...importPlugin.flatConfigs.recommended.rules,
             'import/order': [
                 'error',
                 {
-                    groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+                    groups: [
+                        'builtin',
+                        'external',
+                        'internal',
+                        'parent',
+                        'sibling',
+                        'index',
+                    ],
                     'newlines-between': 'always',
-                    alphabetize: {
-                        order: 'asc',
-                        caseInsensitive: true,
-                    },
+                    alphabetize: { order: 'asc', caseInsensitive: true },
                 },
             ],
         },
     },
+
     {
         ...importPlugin.flatConfigs.typescript,
         files: ['**/*.{ts,tsx}'],
     },
+
     {
-        ignores: ['vendor', 'node_modules', 'public', 'bootstrap/ssr', 'tailwind.config.js'],
+        ignores: [
+            'vendor',
+            'node_modules',
+            'public',
+            'bootstrap/ssr',
+            'tailwind.config.js',
+        ],
     },
-    prettier, // Turn off all rules that might conflict with Prettier
+
+    prettier,
 ];

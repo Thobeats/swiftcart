@@ -1,21 +1,21 @@
 'use client';
 
+import { Head, useForm } from '@inertiajs/react';
+import { Lock, Mail } from 'lucide-react';
+import * as React from 'react';
+
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Head, useForm } from '@inertiajs/react';
-import { Lock, Mail } from 'lucide-react';
-import React from 'react';
 
 export default function Login({
-    status,
     canResetPassword,
 }: {
     status?: string;
     canResetPassword: boolean;
 }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, post, errors, reset } = useForm({
         email: '',
         password: '',
         remember: false,

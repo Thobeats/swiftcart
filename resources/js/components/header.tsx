@@ -1,11 +1,12 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { useCart } from '@/lib/cart-context';
 import { router } from '@inertiajs/react';
 import { Menu, Search, ShoppingCart, X } from 'lucide-react';
 import { useState } from 'react';
+
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { useCart } from '@/lib/cart-context';
 
 interface HeaderProps {
     auth: boolean | { name: string; email: string };

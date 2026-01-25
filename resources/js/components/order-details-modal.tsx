@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import { X } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { OrderItem } from "@/types";
 

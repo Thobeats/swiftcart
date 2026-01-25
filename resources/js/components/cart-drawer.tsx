@@ -1,8 +1,9 @@
 'use client';
 
+import { CheckCircle, Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/lib/cart-context';
-import { CheckCircle, Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react';
 
 interface CartDrawerProps {
     isOpen: boolean;

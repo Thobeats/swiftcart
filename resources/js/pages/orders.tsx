@@ -1,11 +1,12 @@
 'use client';
 
+import { Head } from '@inertiajs/react';
+import { useMemo, useState } from 'react';
+
 import { OrderDetailsModal } from '@/components/order-details-modal';
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { Order, OrderItem } from '@/types';
-import { Head } from '@inertiajs/react';
-import { useMemo, useState } from 'react';
 
 interface OrderDetailsModalProps {
     items: OrderItem[];
@@ -39,7 +40,7 @@ export default function OrdersPage({
         setPage(Math.min(Math.max(1, p), totalPages));
 
     // reset page when pageSize or orders change
-    useMemo(() => setPage(1), [pageSize, orders.length]);
+    useMemo(() => setPage(1), []);
 
     const checkDetails = async (orderId: string) => {
         try {
@@ -139,7 +140,7 @@ export default function OrdersPage({
                                                             currency: 'USD',
                                                         },
                                                     ).format(
-                                                        (o as any).price ?? 0,
+                                                        (o as {price: number}).price ?? 0,
                                                     )}
                                                 </td>
                                                 <td className="text-muted-foreground px-6 py-4 text-sm">

@@ -1,11 +1,9 @@
 'use client';
 
+import { router, usePage } from '@inertiajs/react';
 import { createContext, useContext, useState, type ReactNode } from 'react';
 
 import { Product } from '@/types';
-import { router, usePage } from '@inertiajs/react';
-
-
 
 export interface CartItem extends Omit<
     Product,
@@ -36,7 +34,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
     const { props } = usePage();
 
     const initialCart: CartItem[] =
-        (props as any).cartitems ?? (props as any).cartItems ?? [];
+        // @ts-expect-error --- props can be allowed
+        (props as {cartItems: CartItem[]}).cartitems ??
+        // @ts-expect-error --- props can be allowed
+        (props as {cartItems: CartItem[]}).cartItems ??
+        [];
 
     const [cart, setCart] = useState<CartItem[]>(initialCart);
     const [cartCount, setCartCount] = useState<number>(
@@ -51,7 +53,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
             {},
             {
                 onSuccess: ({ props }) => {
-                    const newCart = (props as any).success;
+                    // @ts-expect-error -- props can be allowed
+                    const newCart = (props as {success: CartItem[]}).success as CartItem;
                     setCart((prev) => {
                         /// Check id the cart exists
                         let allCart = prev;
@@ -168,7 +171,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
                 },
                 onError: (error) => {
                     console.log(error);
-                }
+                },
             },
         );
     };

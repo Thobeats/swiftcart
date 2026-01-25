@@ -1,6 +1,7 @@
 "use client";
 
 import { Plus } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/cart-context";
 import { Product } from "@/types";
